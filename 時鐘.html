@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>clock</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Pixelify+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: rgb(1, 57, 78);
+      padding: 0 15%;
+    }
+
+    #clock {
+      /* background-color: black; */
+      width: 600px;
+      height: 600px;
+      float: left;
+      position: relative;
+      top: 50%;
+      /* top: calc(50% - 300px - 100px); */
+      transform: translateY(-50%);
+    }
+
+    #right {
+      /* background-color: white; */
+      float: right;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    img {
+      height: 60%;
+    }
+
+    .scale {
+      transform: scaleX(-1);
+    }
+
+    #text {
+      color: rgb(187, 173, 153);
+      text-align: center;
+      font-size: 50px;
+      font-family: 'Pixelify Sans', cursive;
+      margin-top: 50px;
+    }
+
+
+    /* 數字共用設定 */
+    .num {
+      color: rgb(187, 173, 153);
+      font-size: 300px;
+      font-family: 'Pixelify Sans', cursive;
+      font-weight: 700;
+      line-height: 200px;
+    }
+
+    .num12 {
+      text-align: center;
+    }
+
+    .num9 {
+      float: left;
+    }
+
+    .num3 {
+      float: right;
+
+    }
+
+    .num6 {
+      text-align: center;
+      clear: both;
+    }
+
+    #hour {
+      width: 120px;
+      height: 120px;
+      background-image: linear-gradient(90deg, rgba(187, 173, 153, 0.6), rgba(187, 173, 153, 0.1) 20%, rgba(187, 173, 103, 0) 90%);
+      border-radius: 0 0 100% 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* 旋轉原點 */
+      transform-origin: left top;
+    }
+
+    #minute {
+      width: 230px;
+      height: 230px;
+      background-image: linear-gradient(90deg, rgba(187, 173, 153, 0.6), rgba(187, 173, 153, 0.1) 20%, rgba(187, 173, 153, 0) 90%);
+      border-radius: 0 0 100% 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* 旋轉原點 */
+      transform-origin: left top;
+    }
+
+    #second {
+      width: 350px;
+      height: 350px;
+      background-image: linear-gradient(90deg, rgba(187, 173, 153, 0.6), rgba(187, 173, 153, 0.1) 20%, rgba(187, 173, 153, 0) 90%);
+      border-radius: 0 0 100% 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      /* 旋轉原點 */
+      transform-origin: left top;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="clock">
+    <!-- 數字 -->
+    <div class="num num12">12</div>
+    <div class="num num9">9</div>
+    <div class="num num3">3</div>
+    <div class="num num6">6</div>
+    <!-- 指針 -->
+    <div id="hour"></div>
+    <div id="minute"></div>
+    <div id="second"></div>
+  </div>
+
+  <div id="right">
+    <div id="img">
+      <img src="./walking.gif">
+    </div>
+    <!-- 時間文字 -->
+    <p id="text">00:00:00</p>
+  </div>
+
+  <script>
+    // 抓元素
+    const elText = document.getElementById('text')
+    const elHour = document.getElementById('hour')
+    const elMinute = document.getElementById('minute')
+    const elSecond = document.getElementById('second')
+    const walking = document.getElementsByTagName('img')
+
+
+
+    // 宣告 fonction
+    const clock = () => {
+      // 取現在時間
+      const date = new Date()
+      const hour = date.getHours()
+      const minute = date.getMinutes()
+      const second = date.getSeconds()
+
+      // 指針旋轉
+      elHour.style.transform = `rotate(${hour * 30 - 180}deg)`
+      elMinute.style.transform = `rotate(${minute * 6 - 180}deg)`
+      elSecond.style.transform = `rotate(${second * 6 - 180}deg)`
+
+      // 顯示時間文字
+      elText.innerText = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
+
+      // 0 秒換方向
+      if (second === 0) {
+        walking[0].classList.toggle('scale')
+      }
+    }
+
+    setInterval(clock, 1000)
+    clock()
+
+  </script>
+</body>
+
+</html>
